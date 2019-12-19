@@ -111,6 +111,7 @@ const gleanMilestones = [
   ["m13", "Glean Python bindings MVP"],
   ["m14", "Lockwise Integration (iOS/Android)"],
   ["m15", "Project FOG"],
+  ["m16", "Ping uploading logic in glean-core"],
   ["backlog", "backlog"],
 ];
 
