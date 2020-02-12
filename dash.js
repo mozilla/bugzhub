@@ -402,6 +402,17 @@ let bugLists = new Map([
               open: true,
               whiteboard: `[telemetry:fog:${milestone[0]}]`,
             },
+          },
+          {
+            search: {
+              type: "bugzillaComponent",
+              product: "Data Platform and Tools",
+              component: "Glean: SDK",
+            },
+            filters: {
+              open: true,
+              whiteboard: `[telemetry:fog:${milestone[0]}]`,
+            },
           }
         ],
       },
