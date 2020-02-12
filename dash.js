@@ -114,6 +114,11 @@ const gleanMilestones = [
   ["m16", "Ping uploading logic in glean-core"],
   ["backlog", "backlog"],
 ];
+//
+// Milestones for Project FOG
+const fogMilestones = [
+  ["m1", "The Basics"],
+];
 
 let bugLists = new Map([
   // TODO:
@@ -372,6 +377,65 @@ let bugLists = new Map([
           filters: {
             open: false,
             whiteboard: `[telemetry:glean-rs:`,
+            lastChangeTime: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
+          },
+        },
+      ],
+    }],
+  ])],
+
+  /**************************************************************************
+   * Project FOG bugs.
+   *************************************************************************/
+  ["fog", new Map([
+    ... fogMilestones.map(milestone => [`milestone ${milestone[0]}: ${milestone[1]}`,
+      {
+        columns: ["assignee", "title", "whiteboard"],
+        searches: [
+          {
+            search: {
+              type: "bugzillaComponent",
+              product: "Toolkit",
+              component: "Telemetry",
+            },
+            filters: {
+              open: true,
+              whiteboard: `[telemetry:fog:${milestone[0]}]`,
+            },
+          }
+        ],
+      },
+    ]),
+    ["milestone m?: incoming",
+      {
+        columns: ["assignee", "title", "whiteboard"],
+        searches: [
+          {
+            search: {
+              type: "bugzillaComponent",
+              product: "Toolkit",
+              component: "Telemetry",
+            },
+            filters: {
+              open: true,
+              whiteboard: `[telemetry:fog:m?]`,
+            },
+          }
+        ],
+      },
+    ],
+    ["recently closed", {
+      columns: ["assignee", "title", "resolution"],
+      searches: [
+        {
+          search: {
+            type: "bugzillaComponent",
+            product: "Toolkit",
+            component: "Telemetry",
+          },
+          filters: {
+            open: false,
+            whiteboard: `[telemetry:fog:`,
             lastChangeTime: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
           },
         },
