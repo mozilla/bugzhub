@@ -112,6 +112,7 @@ const gleanMilestones = [
   ["m14", "Lockwise Integration (iOS/Android)"],
   ["m15", "Project FOG"],
   ["m16", "Ping uploading logic in glean-core"],
+  ["m17", "High-level docs"],
   ["backlog", "backlog"],
 ];
 //
