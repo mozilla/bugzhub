@@ -30,11 +30,8 @@ const gh = new GitHub();
 // TODO: refactor to people list with email, name, shortname, gh alias, team list.
 let teamEmails = [
   "chutten@mozilla.com",
-  "gfritzsche@mozilla.com",
+  "mdboom@gmail.com",
   "alessio.placitelli@gmail.com",
-  "flyinggrub@gmail.com",
-  "kustiuzhanina@mozilla.com",
-  "alexrs95@gmail.com",
   "jrediger@mozilla.com",
   "tlong@mozilla.com",
   "brizental@mozilla.com"
