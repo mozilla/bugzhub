@@ -432,7 +432,18 @@ let bugLists = new Map([
               open: true,
               whiteboard: `[telemetry:fog:m?]`,
             },
-          }
+          },
+          {
+            search: {
+              type: "bugzillaComponent",
+              product: "Data Platform and Tools",
+              component: "Glean: SDK"
+            },
+            filters: {
+              open: true,
+              whiteboard: `[telemetry:fog:m?]`,
+            },
+          },
         ],
       },
     ],
@@ -444,6 +455,18 @@ let bugLists = new Map([
             type: "bugzillaComponent",
             product: "Toolkit",
             component: "Telemetry",
+          },
+          filters: {
+            open: false,
+            whiteboard: `[telemetry:fog:`,
+            lastChangeTime: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
+          },
+        },
+        {
+          search: {
+            type: "bugzillaComponent",
+            product: "Data Platform and Tools",
+            component: "Glean: SDK"
           },
           filters: {
             open: false,
