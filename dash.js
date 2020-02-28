@@ -84,8 +84,6 @@ const gleanBugzillaProjects = [
 
 // Milestones for glean (includes glean-core)
 const gleanMilestones = [
-  ["m11", "Glean going forward"],
-  ["m12", "Glean on iOS - Phase 5 - Feature Parity"],
   ["m13", "Glean Python bindings MVP"],
   ["m14", "Lockwise Integration (iOS/Android)"],
   ["m15", "Project FOG"],
