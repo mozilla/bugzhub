@@ -30,57 +30,19 @@ const gh = new GitHub();
 // TODO: refactor to people list with email, name, shortname, gh alias, team list.
 let teamEmails = [
   "chutten@mozilla.com",
-  "mdboom@gmail.com",
+  "mdroettboom@mozilla.com",
   "alessio.placitelli@gmail.com",
   "jrediger@mozilla.com",
   "tlong@mozilla.com",
   "brizental@mozilla.com"
 ];
 let teamGithubNames = [
-  "georgf",
+  "mdboom",
   "chutten",
   "badboy",
   "Dexterp37",
   "travis79",
   "brizental"
-];
-
-const tmoGithubProjects = [
-  {
-    user: "mozilla",
-    project: "medusa",
-  },
-  {
-    user: "mozilla",
-    project: "cerberus",
-  },
-  {
-    user: "mozilla",
-    project: "telemetry-dashboard",
-  },
-  {
-    user: "mozilla",
-    project: "probe-dictionary",
-  },
-  {
-    user: "mozilla",
-    project: "probe-scraper",
-  },
-];
-
-const tmoBugzillaProjects = [
-  {
-    product: "Webtools",
-    component: "Telemetry Dashboard",
-  },
-  {
-    product: "Data Platform and Tools",
-    component: "Datasets: Telemetry Aggregates",
-  },
-  {
-    product: "Data Platform and Tools",
-    component: "Telemetry Aggregation Service",
-  },
 ];
 
 const telemetryBugzillaProjects = [
@@ -91,13 +53,32 @@ const telemetryBugzillaProjects = [
   {
     product: "Data Platform and Tools",
     component: "Glean: SDK",
+  },
+  {
+    product: "Data Platform and Tools",
+    component: "Glean Metric Types",
   }
 ];
 
-const telemetryGithubProjects = [
+const gleanGithubProjects = [
   {
     user: "mozilla",
-    project: "fhr-jelly",
+    project: "glean",
+  },
+  {
+    user: "mozilla",
+    project: "glean_parser",
+  }
+];
+
+const gleanBugzillaProjects = [
+  {
+    product: "Data Platform and Tools",
+    component: "Glean: SDK",
+  },
+  {
+    product: "Data Platform and Tools",
+    component: "Glean Metric Types",
   }
 ];
 
@@ -112,7 +93,7 @@ const gleanMilestones = [
   ["m17", "High-level docs"],
   ["backlog", "backlog"],
 ];
-//
+
 // Milestones for Project FOG
 const fogMilestones = [
   ["m1", "The Basics"],
@@ -150,46 +131,11 @@ let bugLists = new Map([
       {
         columns: ["assignee", "points", "title", "project", "whiteboard"],
         searches: [
-          ... tmoGithubProjects.map(p => ({
-            search: {
-              type: "githubRepo",
-              user: p.user,
-              project: p.project,
-            },
-            filters: {
-              priority: priority,
-              open: true,
-              assignees: teamGithubNames,
-            },
-          })),
-          ... tmoBugzillaProjects.map(p => ({
-            search: {
-              type: "bugzillaComponent",
-              product: p.product,
-              component: p.component,
-            },
-            filters: {
-              priority: priority,
-              open: true,
-              assignees: teamEmails,
-            },
-          })),
           ... telemetryBugzillaProjects.map(p => ({
             search: {
               type: "bugzillaComponent",
               product: p.product,
               component: p.component,
-            },
-            filters: {
-              priority: priority,
-              open: true,
-            },
-          })),
-          ... telemetryGithubProjects.map(p => ({
-            search: {
-              type: "githubRepo",
-              user: p.user,
-              project: p.project,
             },
             filters: {
               priority: priority,
@@ -329,6 +275,36 @@ let bugLists = new Map([
    * Glean bugs.
    *************************************************************************/
   ["glean", new Map([
+    ... [1, 2].map(priority => [
+      `p${priority}`,
+      {
+        columns: ["assignee", "points", "title", "project", "whiteboard"],
+        searches: [
+          ... gleanBugzillaProjects.map(p => ({
+            search: {
+              type: "bugzillaComponent",
+              product: p.product,
+              component: p.component,
+            },
+            filters: {
+              priority: priority,
+              open: true,
+            },
+          })),
+          ... gleanGithubProjects.map(p => ({
+            search: {
+              type: "githubRepo",
+              user: p.user,
+              project: p.project,
+            },
+            filters: {
+              priority: priority,
+              open: true,
+            },
+          })),
+        ],
+      },
+    ]),
     ... gleanMilestones.map(milestone => [`milestone ${milestone[0]}: ${milestone[1]}`,
       {
         columns: ["assignee", "title", "whiteboard"],
@@ -546,161 +522,6 @@ let bugLists = new Map([
       }
     ],
   ])],
-
-  /**************************************************************************
-   * Triaged bugs for TMO team.
-   *************************************************************************/
-  ["tmo_triaged", new Map([
-    [
-      "tmo prs",
-      {
-        columns: ["assignee", "title", "project", "whiteboard"],
-        searches: [
-          ... tmoGithubProjects.map(p => ({
-            search: {
-              type: "githubRepo",
-              user: p.user,
-              project: p.project,
-            },
-            filters: {
-              open: true,
-              isPullRequest: true,
-            },
-          })),
-        ],
-      },
-    ],
-    ... ["1", "2", "3", "4"].map(priority => [
-      "tmo p" + priority,
-      {
-        columns: ["assignee", "title", "project", "whiteboard"],
-        searches: [
-          ... tmoGithubProjects.map(p => ({
-            search: {
-              type: "githubRepo",
-              user: p.user,
-              project: p.project,
-            },
-            filters: {
-              priority: priority,
-              open: true,
-              isPullRequest: false,
-            },
-          })),
-          ... tmoBugzillaProjects.map(p => ({
-            search: {
-              type: "bugzillaComponent",
-              product: p.product,
-              component: p.component,
-            },
-            filters: {
-              priority: priority,
-              open: true,
-            },
-          })),
-        ],
-      },
-    ]),
-  ])],
-
-  /**************************************************************************
-   * Untriaged bugs for TMO team.
-   *************************************************************************/
-  ["tmo_untriaged", new Map([
-    ["tmo untriaged", {
-      columns: ["assignee", "title", "project", "whiteboard"],
-      searches: [
-        ... tmoGithubProjects.map(p => ({
-          search: {
-            type: "githubRepo",
-            user: p.user,
-            project: p.project,
-          },
-          filters: {
-            unprioritized: true,
-            open: true,
-            isPullRequest: false,
-          },
-        })),
-        ... tmoBugzillaProjects.map(p => ({
-          search: {
-            type: "bugzillaComponent",
-            product: p.product,
-            component: p.component,
-          },
-          filters: {
-            unprioritized: true,
-            open: true,
-          },
-        })),
-      ],
-    }]
-  ])],
-
-  /**************************************************************************
-   * Triaged bugs for Data Platform team.
-   *************************************************************************/
-  ["dataplatform_triaged", new Map([1, 2].map(priority => [
-    `p${priority}`,
-    {
-      columns: ["assignee", "title", "project", "whiteboard"],
-      searches: [
-        {
-          search: {
-            type: "bugzillaWhiteboard",
-            whiteboardContent: "[DataPlatform]",
-          },
-          filters: {
-            priority: priority,
-            open: true,
-          },
-        },
-      ],
-    }
-  ]))],
-
-  /**************************************************************************
-   * Untriaged bugs for Data Platform team.
-   *************************************************************************/
-  ["dataplatform_untriaged", new Map([
-    ["dataplatform untriaged", {
-      columns: ["assignee", "title", "project", "whiteboard"],
-      searches: [
-        {
-          search: {
-            type: "bugzillaWhiteboard",
-            whiteboardContent: "[DataPlatform]",
-          },
-          filters: {
-            unprioritized: true,
-            open: true,
-          },
-        },
-      ],
-    }]
-  ])],
-
-  /**************************************************************************
-   * Backlog bugs for Data Platform team.
-   *************************************************************************/
-  ["dataplatform_backlog", new Map([3, 4, 5].map(priority => [
-    `p${priority}`,
-    {
-      columns: ["assignee", "title", "project", "whiteboard"],
-      searches: [
-        {
-          search: {
-            type: "bugzillaWhiteboard",
-            whiteboardContent: "[DataPlatform]",
-          },
-          filters: {
-            priority: priority,
-            open: true,
-          },
-        },
-      ],
-    }
-  ]))],
 ]);
 
 var MS_IN_A_DAY = 24 * 60 * 60 * 1000;
