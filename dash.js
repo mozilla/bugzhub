@@ -94,7 +94,6 @@ const gleanMilestones = [
 
 // Milestones for Project FOG
 const fogMilestones = [
-  ["m1", "The Basics"],
   ["m2", "Foundation"],
   ["m3", "Rust/main"],
 ];
