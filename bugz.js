@@ -60,6 +60,10 @@ class Bug {
   get resolution() {
     return "";
   }
+
+  get severity() {
+    return null;
+  }
 }
 
 class GithubIssue extends Bug {
@@ -98,6 +102,10 @@ class BugzillaBug extends Bug {
 
   get resolution() {
     return this._data.resolution;
+  }
+
+  get severity() {
+    return this._data.severity;
   }
 }
 
@@ -217,6 +225,7 @@ async function loadBugsFromBugzilla(searchParams) {
     "priority",
     "mentors",
     "resolution",
+    "severity",
   ].join(",");
   queryParams.include_fields = include_fields;
 
@@ -246,6 +255,7 @@ async function loadBugsFromBugzilla(searchParams) {
       component: b.component,
       mentors: b.mentors,
       resolution: b.resolution,
+      severity: b.severity,
     };
 
     if (b.assigned_to !== "nobody@mozilla.org") {
