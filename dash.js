@@ -501,8 +501,12 @@ let bugLists = new Map([
               component: p.component,
             },
             filters: {
-              unprioritized: true,
               open: true,
+              customFilter: (b) => {
+                return b.priority === null ||
+                  (b._data.component === "Telemetry" &&
+                    (b.severity === null || b.severity === "--"));
+              },
             },
           })),
           {
