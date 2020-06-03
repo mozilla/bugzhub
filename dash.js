@@ -94,8 +94,9 @@ const gleanMilestones = [
 
 // Milestones for Project FOG
 const fogMilestones = [
-  ["m3", "Rust/main"],
   ["m4", "...And The Rest"],
+  ["m5", "We're doing how much?"],
+  ["m6", "Babel"],
 ];
 
 let bugLists = new Map([
