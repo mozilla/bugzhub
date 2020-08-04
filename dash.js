@@ -360,6 +360,72 @@ let bugLists = new Map([
   ])],
 
   /**************************************************************************
+   * Glean metric types requests.
+   *************************************************************************/
+  ["glean metrics", new Map([
+    ["Triaged",
+      {
+        columns: ["assignee", "priority", "title", "whiteboard"],
+        searches: [
+          {
+            search: {
+              type: "bugzillaComponent",
+              product: "Data Platform and Tools",
+              component: "Glean Metric Types",
+            },
+            filters: {
+              customFilter: (b) => {
+                return b.priority !== null ||
+                  (b._data.component === "Glean Metric Types" &&
+                    (b.severity !== null && b.severity !== "--"));
+              },
+              open: true,
+            },
+          }
+        ],
+      },
+    ],
+    ["Untriaged",
+      {
+        columns: ["assignee", "title", "whiteboard"],
+        searches: [
+          {
+            search: {
+              type: "bugzillaComponent",
+              product: "Data Platform and Tools",
+              component: "Glean Metric Types",
+            },
+            filters: {
+              customFilter: (b) => {
+                return b.priority === null ||
+                  (b._data.component === "Glean Metric Types" &&
+                    (b.severity === null || b.severity === "--"));
+              },
+              open: true,
+            },
+          }
+        ],
+      },
+    ],
+    ["recently closed", {
+      columns: ["assignee", "title", "resolution"],
+      searches: [
+        {
+          search: {
+            type: "bugzillaComponent",
+            product: "Data Platform and Tools",
+            component: "Glean Metric Types",
+          },
+          filters: {
+            open: false,
+            lastChangeTime: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
+          },
+        },
+      ],
+    }],
+  ])],
+
+  /**************************************************************************
    * Project FOG bugs.
    *************************************************************************/
   ["fog", new Map([
