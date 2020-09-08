@@ -85,11 +85,11 @@ const gleanBugzillaProjects = [
 // Milestones for glean (includes glean-core)
 const gleanMilestones = [
   ["m13", "Glean Python bindings MVP"],
-  ["m14", "Lockwise Integration (iOS/Android)"],
   ["m15", "Project FOG"],
   ["m16", "Ping uploading logic in glean-core"],
   ["m17", "High-level docs"],
   ["m18", "Glean C# bindings MVP"],
+  ["m19", "Move all the things to Rust"],
   ["backlog", "backlog"],
 ];
 
