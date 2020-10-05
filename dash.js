@@ -368,6 +368,7 @@ let bugLists = new Map([
         columns: ["assignee", "priority", "title", "whiteboard"],
         searches: [
           {
+            _name: "triaged", // enforcing unique cache key
             search: {
               type: "bugzillaComponent",
               product: "Data Platform and Tools",
@@ -390,6 +391,7 @@ let bugLists = new Map([
         columns: ["assignee", "title", "whiteboard"],
         searches: [
           {
+            _name: "untriaged", // enforcing unique cache key
             search: {
               type: "bugzillaComponent",
               product: "Data Platform and Tools",
