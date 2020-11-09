@@ -90,6 +90,7 @@ const gleanMilestones = [
   ["m17", "High-level docs"],
   ["m18", "Glean C# bindings MVP"],
   ["m19", "Move all the things to Rust"],
+  ["m20", "Glean.js MVP"],
   ["backlog", "backlog"],
 ];
 
