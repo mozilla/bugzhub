@@ -368,7 +368,7 @@ let bugLists = new Map([
    * Glean.js bugs
    *************************************************************************/
   ["glean.js", new Map([
-    ... [1, 2].map(priority => [
+    ... [1, 2, 3].map(priority => [
       `p${priority}`,
       {
         columns: ["assignee", "title", "whiteboard"],
