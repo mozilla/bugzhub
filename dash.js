@@ -380,14 +380,14 @@ let bugLists = new Map([
               component: "Glean.js",
             },
             filters: {
+              priority: priority,
               open: true,
-              whiteboard: `[telemetry:glean-js:${milestone[0]}]`,
             },
           }
         ],
       },
     ]),
-    ... gleanJsMilestones.map(milestone => [`milestone ${milestone[0]}: ${milestone[1]}`,
+    ... gleanJsMilestones.map(milestone => [ `milestone ${milestone[0]}: ${milestone[1]}`,
       {
         columns: ["assignee", "title", "whiteboard"],
         searches: [
