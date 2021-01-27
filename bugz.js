@@ -208,6 +208,10 @@ async function loadBugsFromBugzilla(searchParams) {
     if ("whiteboard" in filters) {
       queryParams.whiteboard = filters.whiteboard;
     }
+    if ("notWhiteboard" in filters) {
+      queryParams.whiteboard = filters.notWhiteboard;
+      queryParams.status_whiteboard_type = "notregexp";
+    }
     if ("lastChangeTime" in filters) {
       queryParams.last_change_time = filters.lastChangeTime.toISOString();
     }
