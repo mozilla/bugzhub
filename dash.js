@@ -84,10 +84,10 @@ const gleanBugzillaProjects = [
 
 // Milestones for glean (includes glean-core)
 const gleanMilestones = [
+  ["testing", "Improve testing"],
   ["m13", "Glean Python bindings"],
   ["m17", "High-level docs"],
   ["m19", "Move all the things to Rust"],
-  ["backlog", "backlog"],
 ];
 
 // Milestones for Glean.js
@@ -277,8 +277,8 @@ let bugLists = new Map([
    * Glean bugs.
    *************************************************************************/
   ["glean", new Map([
-    ... [1, 2].map(priority => [
-      `p${priority}`,
+    ... [[1, "active bugs"], [2, "next iteration"]].map(([priority, name]) => [
+      `p${priority}: ${name}`,
       {
         columns: ["assignee", "points", "title", "project", "whiteboard"],
         searches: [
@@ -307,7 +307,27 @@ let bugLists = new Map([
         ],
       },
     ]),
-    ... gleanMilestones.map(milestone => [`milestone ${milestone[0]}: ${milestone[1]}`,
+    [
+      "p3: important, but not yet scheduled",
+      {
+        columns: ["assignee", "points", "title", "project", "whiteboard"],
+        searches: [
+          ... gleanBugzillaProjects.map(p => ({
+            search: {
+              type: "bugzillaComponent",
+              product: p.product,
+              component: p.component,
+            },
+            filters: {
+              priority: 3,
+              open: true,
+              notWhiteboard: "telemetry:glean-rs:|telemetry:fog:"
+            },
+          })),
+        ],
+      },
+    ],
+    ... gleanMilestones.map(milestone => [`Foucs area ${milestone[0]}: ${milestone[1]}`,
       {
         columns: ["assignee", "title", "whiteboard"],
         searches: [
@@ -325,6 +345,25 @@ let bugLists = new Map([
         ],
       },
     ]),
+    [
+      "backlog",
+      {
+        columns: ["assignee", "points", "title", "project", "whiteboard"],
+        searches: [
+          ... gleanBugzillaProjects.map(p => ({
+            search: {
+              type: "bugzillaComponent",
+              product: p.product,
+              component: p.component,
+            },
+            filters: {
+              priority: 4,
+              open: true,
+            },
+          })),
+        ],
+      },
+    ],
     ["milestone m?: incoming",
       {
         columns: ["assignee", "title", "whiteboard"],
