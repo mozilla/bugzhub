@@ -110,50 +110,56 @@ class BugzillaBug extends Bug {
 }
 
 async function loadIssuesFromGithubRepo(searchParams) {
-  let {search, filters} = searchParams;
+  try {
+    let {search, filters} = searchParams;
 
-  let projectIssues = gh.getIssues(search.user, search.project);
-  let queryParams = {
-    state: (filters && filters.open) ? "open" : "closed",
-  };
-  let response = await projectIssues.listIssues(queryParams);
-
-  let mapped = response.data.map(is => {
-    let data = {
-      id: "gh:" + is.id,
-      assignee: null,
-      points: null,
-      title: is.title,
-      lastChangeDate: is.updated_at,
-      url: is.html_url,
-      whiteboard: null,
-      priority: null,
-      labels: null,
-      project: search.project,
-      isPullRequest: ("pull_request" in is),
+    let projectIssues = gh.getIssues(search.user, search.project);
+    let queryParams = {
+      state: (filters && filters.open) ? "open" : "closed",
     };
+    let response = await projectIssues.listIssues(queryParams);
 
-    if (is.assignee) {
-      data.assignee = is.assignee.login;
-    } else if (data.isPullRequest) {
-      data.assignee = is.user.login;
-    }
+    let mapped = response.data.map(is => {
+      let data = {
+        id: "gh:" + is.id,
+        assignee: null,
+        points: null,
+        title: is.title,
+        lastChangeDate: is.updated_at,
+        url: is.html_url,
+        whiteboard: null,
+        priority: null,
+        labels: null,
+        project: search.project,
+        isPullRequest: ("pull_request" in is),
+      };
 
-    let labelNames = is.labels.map(l => l.name);
-    data.labels = labelNames;
-    if (data.isPullRequest) {
-      data.labels.push("pr");
-    }
+      if (is.assignee) {
+        data.assignee = is.assignee.login;
+      } else if (data.isPullRequest) {
+        data.assignee = is.user.login;
+      }
 
-    let priorityLabel = labelNames.find(l => l.match(/^priority:[0-9]$/));
-    if (priorityLabel) {
-      data.priority = priorityLabel.split(":")[1];
-    }
+      let labelNames = is.labels.map(l => l.name);
+      data.labels = labelNames;
+      if (data.isPullRequest) {
+        data.labels.push("pr");
+      }
 
-    return new GithubIssue(data);
-  });
+      let priorityLabel = labelNames.find(l => l.match(/^priority:[0-9]$/));
+      if (priorityLabel) {
+        data.priority = priorityLabel.split(":")[1];
+      }
 
-  return mapped;
+      return new GithubIssue(data);
+    });
+
+    return mapped;
+  } catch (e) {
+    // A failure in loading GitHub issues shouldn't break the site.
+    console.log("Failed to fetch data from GitHub.", e);
+    return [];
+  }
 }
 
 async function loadBugsFromBugzilla(searchParams) {
