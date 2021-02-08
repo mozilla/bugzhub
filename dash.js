@@ -466,8 +466,20 @@ let bugLists = new Map([
             },
             filters: {
               open: true,
-              whiteboard: `[telemetry:glean-js:m?]`,
-            },
+              customFilter: (b) => {
+                // Incoming by whiteboard tag
+                if (b.whiteboard.includes("telemetry:glean-rs:m?")) {
+                  return true;
+                }
+
+                // Missing priority
+                if (b.priority === null) {
+                  return true;
+                }
+
+                return false;
+              },
+            }
           }
         ],
       },
