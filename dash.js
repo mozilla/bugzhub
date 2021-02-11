@@ -468,7 +468,7 @@ let bugLists = new Map([
               open: true,
               customFilter: (b) => {
                 // Incoming by whiteboard tag
-                if (b.whiteboard.includes("telemetry:glean-rs:m?")) {
+                if (b.whiteboard.includes("telemetry:glean-js:m?")) {
                   return true;
                 }
 
