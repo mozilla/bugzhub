@@ -93,6 +93,7 @@ const gleanMilestones = [
 // Milestones for Glean.js
 const gleanJsMilestones = [
   ["m1", "Integrate Glean.js documentation on the Glean book"],
+  ["m2", "Reaching feature parity with glean-core"],
   ["backlog", "backlog"]
 ];
 
