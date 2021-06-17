@@ -10,7 +10,7 @@ permit persons to whom the Software is furnished to do so, subject to
 the following conditions:
 
 The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
+included in all copies or substantial portions of the Software.glean
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -93,6 +93,7 @@ const gleanMilestones = [
 // Milestones for Glean.js
 const gleanJsMilestones = [
   ["m1", "Integrate Glean.js documentation on the Glean book"],
+  ["m2", "Reaching feature parity with glean-core"],
   ["backlog", "backlog"]
 ];
 
