@@ -87,7 +87,6 @@ const gleanMilestones = [
   ["testing", "Improve testing"],
   ["m13", "Glean Python bindings"],
   ["m17", "High-level docs"],
-  ["m19", "Move all the things to Rust"],
 ];
 
 // Milestones for Glean.js
