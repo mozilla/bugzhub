@@ -64,6 +64,10 @@ const gleanGithubProjects = [
   {
     user: "mozilla",
     project: "glean_parser",
+  },
+  {
+    user: "mozilla",
+    project: "glean.js",
   }
 ];
 
@@ -81,8 +85,9 @@ const gleanBugzillaProjects = [
 // Milestones for glean (includes glean-core)
 const gleanMilestones = [
   ["testing", "Improve testing"],
-  ["m13", "Glean Python bindings"],
+  ["m13", "Glean Python SDK"],
   ["m17", "High-level docs"],
+  ["m18", "Glean JavaScript SDK Feature Parity"],
 ];
 
 // Milestones for Project FOG
@@ -91,6 +96,24 @@ const fogMilestones = [
   ["m7", "Finally the pings"],
   ["m8", "Wait, we're not done?"],
 ];
+
+const GLEAN_SDKS_TAGS = [
+  "telemetry:glean-rs:",
+  "glean-sdk:",
+  "telemetry:glean-js:",
+  "telemetry:fog:"
+]
+
+/**
+ * Checks if a bug contains any of the Glean SDKs whiteboard tags.
+ *
+ * @param {*} bug The bug to check
+ * @param {*} suffix Optional suffix to add to the end of the tag
+ * @returns Whether or not the bug passes the given condition
+ */
+function anyGleanTag(bug, suffix = "") {
+  return GLEAN_SDKS_TAGS.some(tag => bug.whiteboard.includes(`${tag}${suffix}`));
+}
 
 let bugLists = new Map([
   // TODO:
@@ -310,13 +333,13 @@ let bugLists = new Map([
             filters: {
               priority: 3,
               open: true,
-              notWhiteboard: "telemetry:glean-rs:|telemetry:fog:"
+              customFilter: (b) => !anyGleanTag(b),
             },
           })),
         ],
       },
     ],
-    ... gleanMilestones.map(milestone => [`Foucs area ${milestone[0]}: ${milestone[1]}`,
+    ... gleanMilestones.map(milestone => [`Focus area ${milestone[0]}: ${milestone[1]}`,
       {
         columns: ["assignee", "title", "whiteboard"],
         searches: [
@@ -328,7 +351,7 @@ let bugLists = new Map([
             },
             filters: {
               open: true,
-              whiteboard: `[telemetry:glean-rs:${milestone[0]}]`,
+              customFilter: (b) => anyGleanTag(b, milestone[0]),
             },
           }
         ],
@@ -348,6 +371,7 @@ let bugLists = new Map([
             filters: {
               priority: 4,
               open: true,
+              customFilter: (b) => !anyGleanTag(b, "m"),
             },
           })),
         ],
@@ -366,17 +390,12 @@ let bugLists = new Map([
             filters: {
               open: true,
               customFilter: (b) => {
-                // Incoming by whiteboard tag
-                if (b.whiteboard.includes("telemetry:glean-rs:m?")) {
-                  return true;
-                }
-
                 // Missing priority
                 if (b.priority === null) {
                   return true;
                 }
 
-                return false;
+                return anyGleanTag(b, "m?");
               },
             }
           }
@@ -394,8 +413,11 @@ let bugLists = new Map([
           },
           filters: {
             open: false,
-            whiteboard: `[telemetry:glean-rs:`,
             lastChangeTime: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
+            filters: {
+              open: true,
+              customFilter: (b) => anyGleanTag(b),
+            }
           },
         },
       ],
