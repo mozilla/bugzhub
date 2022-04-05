@@ -89,13 +89,6 @@ const gleanMilestones = [
   ["m17", "High-level docs"],
 ];
 
-// Milestones for Glean.js
-const gleanJsMilestones = [
-  ["m1", "Integrate Glean.js documentation on the Glean book"],
-  ["m2", "Reaching feature parity with glean-core"],
-  ["backlog", "backlog"]
-];
-
 // Milestones for Project FOG
 const fogMilestones = [
   ["m6", "Babel"],
@@ -406,95 +399,6 @@ let bugLists = new Map([
           filters: {
             open: false,
             whiteboard: `[telemetry:glean-rs:`,
-            lastChangeTime: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
-          },
-        },
-      ],
-    }],
-  ])],
-
-  /**************************************************************************
-   * Glean.js bugs
-   *************************************************************************/
-  ["glean.js", new Map([
-    ... [1, 2, 3].map(priority => [
-      `p${priority}`,
-      {
-        columns: ["assignee", "title", "whiteboard"],
-        searches: [
-          {
-            search: {
-              type: "bugzillaComponent",
-              product: "Data Platform and Tools",
-              component: "Glean.js",
-            },
-            filters: {
-              priority: priority,
-              open: true,
-            },
-          }
-        ],
-      },
-    ]),
-    ... gleanJsMilestones.map(milestone => [ `milestone ${milestone[0]}: ${milestone[1]}`,
-      {
-        columns: ["assignee", "title", "whiteboard"],
-        searches: [
-          {
-            search: {
-              type: "bugzillaComponent",
-              product: "Data Platform and Tools",
-              component: "Glean.js",
-            },
-            filters: {
-              open: true,
-              whiteboard: `[telemetry:glean-js:${milestone[0]}]`,
-            },
-          }
-        ],
-      },
-    ]),
-    ["milestone m?: incoming",
-      {
-        columns: ["assignee", "title", "whiteboard"],
-        searches: [
-          {
-            search: {
-              type: "bugzillaComponent",
-              product: "Data Platform and Tools",
-              component: "Glean.js",
-            },
-            filters: {
-              open: true,
-              customFilter: (b) => {
-                // Incoming by whiteboard tag
-                if (b.whiteboard.includes("telemetry:glean-js:m?")) {
-                  return true;
-                }
-
-                // Missing priority
-                if (b.priority === null) {
-                  return true;
-                }
-
-                return false;
-              },
-            }
-          }
-        ],
-      },
-    ],
-    ["recently closed", {
-      columns: ["assignee", "title", "resolution"],
-      searches: [
-        {
-          search: {
-            type: "bugzillaComponent",
-            product: "Data Platform and Tools",
-            component: "Glean.js",
-          },
-          filters: {
-            open: false,
             lastChangeTime: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
           },
         },
