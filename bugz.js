@@ -328,22 +328,24 @@ function filterBugs(bugs, searchParams) {
   return bugs;
 }
 
-const bugCache = new Map();
+const bugPromiseCache = new Map();
 
 this.findBugs = async function(searchList) {
   let buglists = [];
   for (let search of searchList) {
     // TODO: non-hackish way to cache this.
     let cacheKey = JSON.stringify(search);
-    let cached = bugCache.get(cacheKey);
+    let cachePromise = bugPromiseCache.get(cacheKey);
 
-    if (cached === undefined) {
-      let bugs = await findBugs(search);
-      let filtered = filterBugs(bugs, search);
-      bugCache.set(cacheKey, filtered);
+    if (cachePromise === undefined) {
+      let bugsPromise = findBugs(search);
+      bugPromiseCache.set(cacheKey, bugsPromise);
     }
 
-    buglists.push(bugCache.get(cacheKey));
+    // The cacheKey doesn't know about filter logic,
+    // So we need to filter after taking it out of the cache.
+    buglists.push(await bugPromiseCache.get(cacheKey)
+            .then(bugs => filterBugs(bugs, search)));
   }
 
   let bugMaps = buglists.map(bl => new Map(bl.map(b => [b.id, b])));
