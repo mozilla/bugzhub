@@ -90,13 +90,6 @@ const gleanMilestones = [
   ["m18", "Glean JavaScript SDK Feature Parity"],
 ];
 
-// Milestones for Project FOG
-const fogMilestones = [
-  ["m6", "Babel"],
-  ["m7", "Finally the pings"],
-  ["m8", "Wait, we're not done?"],
-];
-
 const GLEAN_SDKS_TAGS = [
   "telemetry:glean-rs:",
   "glean-sdk:",
@@ -485,99 +478,6 @@ let bugLists = new Map([
           },
           filters: {
             open: false,
-            lastChangeTime: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
-          },
-        },
-      ],
-    }],
-  ])],
-
-  /**************************************************************************
-   * Project FOG bugs.
-   *************************************************************************/
-  ["fog", new Map([
-    ... fogMilestones.map(milestone => [`milestone ${milestone[0]}: ${milestone[1]}`,
-      {
-        columns: ["assignee", "title", "whiteboard"],
-        searches: [
-          {
-            search: {
-              type: "bugzillaComponent",
-              product: "Toolkit",
-              component: "Telemetry",
-            },
-            filters: {
-              open: true,
-              whiteboard: `[telemetry:fog:${milestone[0]}]`,
-            },
-          },
-          {
-            search: {
-              type: "bugzillaComponent",
-              product: "Data Platform and Tools",
-              component: "Glean: SDK",
-            },
-            filters: {
-              open: true,
-              whiteboard: `[telemetry:fog:${milestone[0]}]`,
-            },
-          }
-        ],
-      },
-    ]),
-    ["milestone m?: incoming",
-      {
-        columns: ["assignee", "title", "whiteboard"],
-        searches: [
-          {
-            search: {
-              type: "bugzillaComponent",
-              product: "Toolkit",
-              component: "Telemetry",
-            },
-            filters: {
-              open: true,
-              whiteboard: `[telemetry:fog:m?]`,
-            },
-          },
-          {
-            search: {
-              type: "bugzillaComponent",
-              product: "Data Platform and Tools",
-              component: "Glean: SDK"
-            },
-            filters: {
-              open: true,
-              whiteboard: `[telemetry:fog:m?]`,
-            },
-          },
-        ],
-      },
-    ],
-    ["recently closed", {
-      columns: ["assignee", "title", "resolution"],
-      searches: [
-        {
-          search: {
-            type: "bugzillaComponent",
-            product: "Toolkit",
-            component: "Telemetry",
-          },
-          filters: {
-            open: false,
-            whiteboard: `[telemetry:fog:`,
-            lastChangeTime: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
-          },
-        },
-        {
-          search: {
-            type: "bugzillaComponent",
-            product: "Data Platform and Tools",
-            component: "Glean: SDK"
-          },
-          filters: {
-            open: false,
-            whiteboard: `[telemetry:fog:`,
             lastChangeTime: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
           },
         },
