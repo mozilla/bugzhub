@@ -64,6 +64,10 @@ class Bug {
   get severity() {
     return null;
   }
+
+  get type() {
+    return null;
+  }
 }
 
 class GithubIssue extends Bug {
@@ -106,6 +110,10 @@ class BugzillaBug extends Bug {
 
   get severity() {
     return this._data.severity;
+  }
+
+  get type() {
+    return this._data.type;
   }
 }
 
@@ -236,6 +244,7 @@ async function loadBugsFromBugzilla(searchParams) {
     "mentors",
     "resolution",
     "severity",
+    "type",
   ].join(",");
   queryParams.include_fields = include_fields;
 
