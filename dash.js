@@ -470,10 +470,10 @@ let bugLists = new Map([
             filters: {
               open: true,
               customFilter: (b) => {
-                return b.priority === null ||
+                return (b.priority === null ||
                   (b._data.component === "Telemetry" &&
                     b.type === "bug" &&
-                    (b.severity === null || b.severity === "--"));
+                    (b.severity === null || b.severity === "--"))) && !b.needinfo;
               },
             },
           })),

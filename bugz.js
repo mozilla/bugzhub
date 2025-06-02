@@ -68,6 +68,10 @@ class Bug {
   get type() {
     return null;
   }
+
+  get needinfo() {
+    return null;
+  }
 }
 
 class GithubIssue extends Bug {
@@ -114,6 +118,12 @@ class BugzillaBug extends Bug {
 
   get type() {
     return this._data.type;
+  }
+
+  get needinfo() {
+    // "needinfo" is flag type 800, per:
+    // https://bmo.readthedocs.io/en/latest/api/core/v1/flag-activity.html
+    return this._data.flags.filter(f => f.type_id === 800)[0];
   }
 }
 
@@ -245,6 +255,7 @@ async function loadBugsFromBugzilla(searchParams) {
     "resolution",
     "severity",
     "type",
+    "flags",
   ].join(",");
   queryParams.include_fields = include_fields;
 
@@ -275,6 +286,7 @@ async function loadBugsFromBugzilla(searchParams) {
       mentors: b.mentors,
       resolution: b.resolution,
       severity: b.severity,
+      flags: b.flags,
     };
 
     if (b.assigned_to !== "nobody@mozilla.org") {
