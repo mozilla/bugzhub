@@ -34,7 +34,8 @@ let teamEmails = [
   "jrediger@mozilla.com",
   "tlong@mozilla.com",
   "chumphreys@mozilla.com",
-  "mathieu@mozilla.com"
+  "mleplatre@mozilla.com",
+  "gbeckley@mozilla.com"
 ];
 let teamGithubNames = [
   "chutten",
@@ -42,7 +43,8 @@ let teamGithubNames = [
   "Dexterp37",
   "travis79",
   "jeddai",
-  "leplatrem"
+  "leplatrem",
+  "grahamalama"
 ];
 
 const telemetryBugzillaProjects = [
